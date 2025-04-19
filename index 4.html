@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>任務分類小助理</title>
+    <style>
+        body {
+            font-family: "Noto Sans TC", sans-serif;
+            background-color: #f5f7fa;
+            padding: 40px;
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 6px;
+            background-color: #fffbea;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>任務分類小助理</h1>
+    <input type="text" id="taskInput" placeholder="請輸入你的任務...">
+    <button onclick="classifyTask()">分類！</button>
+    <div id="output"></div>
+
+    <script>
+        function classifyTask() {
+            const task = document.getElementById("taskInput").value.toLowerCase();
+            const importantKeywords = ["考試", "期中", "期末", "報告", "論文", "學分", "申請", "目標", "面試"];
+            const urgentKeywords = ["今天", "明天", "快", "截止", "馬上", "緊急", "剩下不多", "快到了"];
+            let important = importantKeywords.some(word => task.includes(word));
+            let urgent = urgentKeywords.some(word => task.includes(word));
+            let result = "";
+
+            if (important && urgent) {
+                result = "【馬上做】重要且緊急。這件事應立即處理。";
+            } else if (important) {
+                result = "【安排時間】重要但不緊急。建議安排時間完成。";
+            } else if (urgent) {
+                result = "【委託或快速處理】緊急但不重要，可快速處理或委託他人。";
+            } else {
+                result = "【延後或忽略】不重要也不緊急，可延後處理。";
+            }
+
+            document.getElementById("output").innerText = result;
+        }
+    </script>
+</body>
+</html>
